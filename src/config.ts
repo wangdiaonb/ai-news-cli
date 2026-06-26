@@ -32,10 +32,7 @@ export const SUMMARY_MAX_CHARS = 100;
 export const DEEPSEEK_API_URL = "https://api.deepseek.com/chat/completions";
 
 /** Deepseek 模型 */
-export const DEEPSEEK_MODEL = "deepseek-v4-pro";
-
-/** Deepseek v4-pro 上下文上限（128K） */
-export const DEEPSEEK_CONTEXT_LIMIT = 131_072;
+export const DEEPSEEK_MODEL = "deepseek-chat";
 
 /** AI 摘要并发数 */
 export const SUMMARIZE_CONCURRENCY = 5;
