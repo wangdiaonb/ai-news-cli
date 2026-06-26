@@ -5,6 +5,7 @@
 ## 功能特性
 
 - **多源聚合** — 抓取 TechCrunch、The Verge、Hacker News 三大 AI 新闻源
+- **URL 去重** — 同一篇文章被多个源收录时自动去重，只保留首次出现的记录
 - **AI 摘要** — 调用 Deepseek API 对每篇文章生成一句话中文摘要，替代粗糙的文本截取
 - **标题翻译** — 英文标题自动翻译为中文
 - **24 小时过滤** — 只保留最近 24 小时的文章
@@ -21,7 +22,7 @@ f1新闻/
 │   ├── config.ts       # RSS 源、API 配置、常量
 │   ├── types.ts        # Article / FetchResult 类型定义
 │   ├── fetcher.ts      # 并行抓取 RSS + 清洗原始文本
-│   ├── filter.ts       # 按 24 小时窗口过滤
+│   ├── filter.ts       # URL 去重 + 按 24 小时窗口过滤
 │   ├── summarizer.ts   # Deepseek API：翻译标题 + 生成摘要
 │   └── formatter.ts    # 生成 Markdown 日报
 ├── output/             # 日报输出目录
@@ -65,7 +66,7 @@ npm run fetch
 🤖 AI 翻译+摘要中... 42/42
 
 ✅ 日报已生成: output\ai-news-2026-06-26-1545.md
-📰 共收录 42 篇文章（原始抓取 60 篇）
+📰 共收录 40 篇文章（原始 60 篇，去重 2 篇）
 ```
 
 ## 日报示例
@@ -99,10 +100,11 @@ npm run fetch
 ## 工作原理
 
 ```
-RSS 抓取 → 24h 过滤 → Deepseek AI（翻译标题 + 生成摘要） → 排序 → Markdown 输出
+RSS 抓取 → URL 去重 → 24h 过滤 → Deepseek AI（翻译标题 + 生成摘要） → 排序 → Markdown 输出
 ```
 
 - 三源并行抓取，Promise.allSettled 确保单源故障不阻塞
+- 基于 URL 去重，同一篇文章被多个源收录时只保留一条
 - AI 调用每批 5 篇并发，30 秒超时
 - API Key 未设置时自动跳过 AI，使用原文截取作为降级方案
 - 每次运行生成独立文件（`ai-news-日期-时分.md`），不互相覆盖
