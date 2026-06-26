@@ -1,0 +1,17 @@
+{
+  "name": "ai-news-cli",
+  "version": "1.0.0",
+  "description": "AI 新闻聚合 CLI 工具 - 从多个 RSS 源抓取 AI 相关新闻生成日报",
+  "type": "module",
+  "scripts": {
+    "fetch": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.22.4",
+    "typescript": "^5.7.0"
+  }
+}
